@@ -12,8 +12,8 @@ const ovo = Ovo({
 });
 
 export const metadata = {
-  title: "JC Chiew | Portfolio",
-  description: "description",
+  title: "Jing Cheng Chiew | Portfolio",
+  description: "Chiew Jing Cheng (JC) – Experienced Technology Analyst with 2+ years of total working experience, specializing in delivering impactful Oracle Cloud (OCI, OIC, ERP) solutions and full-stack development expertise in React, Node.js, Spring, and databases (MongoDB, MySQL, Oracle). Certified in AWS, Alibaba Cloud, and Google Cloud, I focus on cloud technology and solution architecture. Passionate about driving innovation in technology consulting, I am based in Kuala Lumpur, Malaysia, and have worked with leading companies like Deloitte Consulting SEA and Finexus Sdn Bhd.",
   
 };
 

@@ -123,7 +123,7 @@ const Contact = () => {
           <Image src={assets.right_arrow_white} alt="" className="w-4" />
         </motion.button>
 
-        <p className={`mt-4 text-lg font-medium ${statusClass} p-4 rounded-md shadow-md`}>
+        <p className={`mt-4 text-lg font-medium ${statusClass} p-4 rounded-md`}>
           {result}
         </p>
       </motion.form>

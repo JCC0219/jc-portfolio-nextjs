@@ -50,6 +50,7 @@ const TAB_DATA = [
       <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
         <li>Git & GitHub</li>
         <li>Oracle Report BI Publisher</li>
+        <li>Basic DNS Configuration</li>
         <li>Cloudflare</li>
         <li>Ubuntu OS</li>
       </ul>
@@ -143,17 +144,7 @@ const About = ({ isDarkMode }) => {
           className="flex-1"
         >
           <p className="mb-10 max-w-2xl font-Ovo">
-            I am a full-time Technology Analyst, currently working on Oracle
-            Cloud projects (OCI, OIC, ERP), delivering impactful solutions and
-            driving innovation in technology consulting. Based in Kuala Lumpur,
-            Malaysia, I have 2 years of experience working with leading
-            companies such as Deloitte Consulting SEA and Finexus Sdn Bhd. My
-            expertise includes full-stack development, with a focus on React,
-            Node.js, Spring, and databases (MongoDB, MySQL, Oracle).
-            Additionally, I am certified in AWS, Alibaba Cloud, and Google
-            Cloud. I am passionate about cloud technology and solution
-            architecture, and I am constantly seeking ways to leverage these
-            technologies to deliver value and innovation.
+          I am a full-time Technology Analyst specializing in Oracle Cloud projects (OCI, OIC, ERP), where I deliver impactful solutions and drive innovation in technology consulting. Based in Kuala Lumpur, Malaysia, I bring 2 years of professional experience working with top companies like Deloitte Consulting SEA and Finexus Sdn Bhd. Beyond Oracle, my expertise spans full-stack development, with a focus on React, Node.js, Spring, and databases such as MongoDB, MySQL. Additionally, I hold certifications in AWS, Alibaba Cloud, and Google Cloud. Passionate about cloud technology and solution architecture, I constantly strive to harness these technologies to deliver value and foster innovation.
           </p>
           <motion.ul
             initial={{ opacity: 0 }}

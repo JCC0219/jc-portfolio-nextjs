@@ -88,7 +88,7 @@ export const workData = [
     title: "My Portfolio",
     description: "Single Page Portfolio with NextJS 15, Tailwind CSS, Framer motion",
     bgImage: "/Work/Portfolio.png", 
-    link:"https://github.com/JCC0219"
+    link:"https://github.com/JCC0219/jc-portfolio-nextjs"
   },
   {
     title: "Car Plate Detection",
@@ -156,7 +156,7 @@ export const infoList = [
     icon: assets.project_icon,
     iconDark: assets.project_icon_dark,
     title: "Present Workplace",
-    description: "Deloitte Consulting SEA, Based in Kuala Lumpur Malaysia",
+    description: "Deloitte Consulting SEA, Based in Kuala Lumpur, Malaysia",
   },
   {
     icon: assets.edu_icon,

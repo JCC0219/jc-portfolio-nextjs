@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
@@ -21,7 +21,7 @@ const Header = () => {
         transition={{ duration: 0.6, delay: 0.3 }}
         className="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo"
       >
-        Hi! I'm Jing Cheng Chiew
+        Hi! I'm JC
         <Image src={assets.hand_icon} alt="" className="w-6" />
       </motion.h3>
       <motion.h1
@@ -59,9 +59,10 @@ const Header = () => {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="max-w-2xl mx-auto font-Ovo"
       >
-        Experienced in Full stack development and Oracle ERP integration.
-        Certified in AWS, Alibaba Cloud, and Google Cloud, with a passionate
-        about cloud technologies and innovative solutions.
+        Jing Cheng (JC) is experienced in Oracle ERP Cloud integration and full-stack
+        development. Certified in AWS, Oracle Cloud, Alibaba Cloud, and Google
+        Cloud, he is passionate about cloud technologies and delivering
+        innovative solutions.
       </motion.p>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
