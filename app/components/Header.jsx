@@ -40,7 +40,7 @@ const Header = () => {
             1000,
             "Full Stack Developer",
             1000,
-            "DevOps & Automation Expert",
+            "Cloud & Integration Expert",
             1000,
             "Making the World a Better Place!",
             2000,

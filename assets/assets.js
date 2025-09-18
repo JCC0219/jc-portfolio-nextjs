@@ -142,7 +142,7 @@ export const serviceData = [
   },
   {
     icon: assets.graphics_icon,
-    title: "DevOps & Automation",
+    title: "Automation & Tools",
     description: "ETL pipeline development, workflow automation with n8n, containerization with Docker, and CI/CD implementation for modern applications.",
     link: "",
   },
