@@ -6,8 +6,8 @@ import { motion } from "motion/react";
 const Services = () => {
   return (
     <motion.div
-      initial={{ y: 30, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
+      initial={{ opacity: 0 }}
+      whileInView={{opacity: 1 }}
       transition={{ duration: 1 }}
       id="services"
       className="w-full px-[12%] py-10 scroll-mt-20"
@@ -35,8 +35,8 @@ const Services = () => {
         transition={{ duration: 0.7, delay: 0.5 }}
         className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo"
       >
-        I am a technoly analyst from Kuala Lumpur, Malaysia with 2 years of
-        experience in company like Deloitte Consulting SEA, and Finexus Sdn Bhd.
+        I am a Senior Technology Analyst at Deloitte with 2+ years of experience in cloud integration, 
+        enterprise consulting, and full-stack development across multiple cloud platforms and technologies.
       </motion.p>
 
       <motion.div

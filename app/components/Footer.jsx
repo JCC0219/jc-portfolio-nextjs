@@ -18,7 +18,12 @@ const Footer = ({ isDarkMode }) => {
             alt=""
             className="w-6"
           />
-          jingcheng070@gmail.com
+          <a 
+            href="mailto:contactme@jcchiew.com" 
+            className="hover:text-blue-400 transition-colors duration-300"
+          >
+            contactme@jcchiew.com
+          </a>
         </div>
       </div>
 

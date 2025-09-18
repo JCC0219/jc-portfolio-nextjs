@@ -32,13 +32,15 @@ const Header = () => {
       >
         <TypeAnimation
           sequence={[
-            "Technology Analyst",
+            "Senior Technology Analyst",
+            1000,
+            "Oracle Cloud Integration Specialist",
+            1000,
+            "Certified Cloud Solution Architect",
             1000,
             "Full Stack Developer",
             1000,
-            "Cloud Solution Architect",
-            1000,
-            "Oracle ERP Integration Specialist",
+            "DevOps & Automation Expert",
             1000,
             "Making the World a Better Place!",
             2000,
@@ -59,10 +61,10 @@ const Header = () => {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="max-w-2xl mx-auto font-Ovo"
       >
-        Jing Cheng (JC) is experienced in Oracle ERP Cloud integration and full-stack
-        development. Certified in AWS, Oracle Cloud, Alibaba Cloud, and Google
-        Cloud, he is passionate about cloud technologies and delivering
-        innovative solutions.
+        Jing Cheng (JC) is a Senior Technology Analyst at Deloitte with expertise in Oracle Cloud Integration, 
+        enterprise consulting, and full-stack development. Certified across AWS, Oracle Cloud, Google Cloud, 
+        and Alibaba Cloud platforms, he specializes in cloud-native solutions, automation, and delivering 
+        innovative enterprise integrations.
       </motion.p>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
@@ -81,7 +83,7 @@ const Header = () => {
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          href="/Chiew Jing Cheng CV v3.3.pdf"
+          href="/Chiew Jing Cheng CV v4.0.pdf"
           download
           className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 dark:text-black bg-white "
         >

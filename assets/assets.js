@@ -77,7 +77,12 @@ export const assets = {
 };
 
 export const workData = [
-
+  {
+    title: "AI Appointment Application",
+    description: "Flutter Web app with Supabase backend, n8n automation, and WhatsApp API integration",
+    bgImage: "/Work/AIAppointmentApp.png",
+    link:"https://appointment-ai.alvinchiew.com/"
+  },
   {
     title: "NodeJS Full Stack Application",
     description: "Simple E-commerce application developed with nodejs (expressjs) and ejs",
@@ -119,28 +124,26 @@ export const workData = [
 export const serviceData = [
   {
     icon: assets.web_icon,
-    title: "Web design",
-    description: "Web development is the process of building, programming...",
+    title: "Cloud Integration",
+    description: "Oracle Integration Cloud (OIC) implementations for enterprise applications including AP, AR, GL, HCM, and Procurement modules with SOAP web services and ESS jobs.",
     link: "",
   },
   {
     icon: assets.mobile_icon,
-    title: "Mobile app",
-    description:
-      "Mobile app development involves creating software for mobile devices...",
+    title: "Full Stack Development",
+    description: "End-to-end application development using React, Next.js, Node.js, Flutter, and modern databases with REST/SOAP API integrations.",
     link: "",
   },
   {
     icon: assets.ui_icon,
-    title: "UI/UX design",
-    description:
-      "UI/UX design focuses on creating a seamless user experience...",
+    title: "Cloud Architecture",
+    description: "Design and implement cloud-native solutions across AWS, OCI, GCP, and Alibaba Cloud with focus on security, scalability, and automation.",
     link: "",
   },
   {
     icon: assets.graphics_icon,
-    title: "Graphics design",
-    description: "Creative design solutions to enhance visual communication...",
+    title: "DevOps & Automation",
+    description: "ETL pipeline development, workflow automation with n8n, containerization with Docker, and CI/CD implementation for modern applications.",
     link: "",
   },
 ];
@@ -156,7 +159,7 @@ export const infoList = [
     icon: assets.project_icon,
     iconDark: assets.project_icon_dark,
     title: "Present Workplace",
-    description: "Deloitte Consulting SEA, Based in Kuala Lumpur, Malaysia",
+    description: "Deloitte Consulting SEA, Based in Kuala Lumpur, Malaysia | 2+ Years Experience",
   },
   {
     icon: assets.edu_icon,

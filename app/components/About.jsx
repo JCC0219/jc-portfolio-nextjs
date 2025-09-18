@@ -7,52 +7,45 @@ import { motion } from "motion/react";
 
 const TAB_DATA = [
   {
-    title: "Front End Dev",
-    id: "frontend",
-    content: (
-      <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
-        <li>ReactJS</li>
-        <li>NextJS</li>
-        <li>Tailwind CSS</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Back End Dev",
-    id: "back",
-    content: (
-      <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
-        <li>NodeJS (ExpressJS)</li>
-        <li>SQL, PL/SQL</li>
-        <li>Oracle Database</li>
-        <li>MongoDB</li>
-        <li>My SQL</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Cloud Tech",
+    title: "Cloud Platforms",
     id: "cloud",
     content: (
       <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
-        <li>AWS Cloud</li>
-        <li>Oracle Cloud Infrastructure (OCI)</li>
-        <li>Oracle Integration Cloud (OIC)</li>
-        <li>Google Cloud</li>
-        <li>Alibaba Cloud</li>
+        <li><strong>AWS</strong> - Solutions Architect & Developer Certified</li>
+        <li><strong>Oracle Cloud</strong> - OCI & OIC Integration Specialist</li>
+        <li><strong>Google Cloud Platform</strong> - Digital Leader Certified</li>
+        <li><strong>Alibaba Cloud</strong> - Professional Cloud Computing</li>
+        <li><strong>Supabase</strong> - Full-stack Backend Solutions</li>
+        <li><strong>Cloudflare</strong> - Security & Performance Optimization</li>
       </ul>
     ),
   },
   {
-    title: "Others",
-    id: "others",
+    title: "Programming Languages",
+    id: "languages",
     content: (
       <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
-        <li>Git & GitHub</li>
-        <li>Oracle Report BI Publisher</li>
-        <li>Basic DNS Configuration</li>
-        <li>Cloudflare</li>
-        <li>Ubuntu OS</li>
+        <li><strong>JavaScript, TypeScript</strong> - Modern web development</li>
+        <li><strong>Python</strong> - ETL pipelines, automation, AI/ML</li>
+        <li><strong>Java</strong> - SpringMVC, enterprise applications</li>
+        <li><strong>Dart</strong> - Flutter Web development</li>
+        <li><strong>C++</strong> - System programming, performance optimization</li>
+        <li><strong>SQL, PL/SQL</strong> - Database development, Oracle expertise</li>
+        <li><strong>Bash</strong> - Linux scripting, automation</li>
+      </ul>
+    ),
+  },
+  {
+    title: "Frameworks & Tools",
+    id: "frameworks",
+    content: (
+      <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
+        <li><strong>Frontend:</strong> ReactJS, NextJS, Flutter Web, Tailwind CSS</li>
+        <li><strong>Backend:</strong> NodeJS, ExpressJS, SpringMVC, FastAPI</li>
+        <li><strong>Databases:</strong> Oracle, MongoDB, MySQL, PostgreSQL</li>
+        <li><strong>DevOps:</strong> Docker, Git & GitHub, Ubuntu Server</li>
+        <li><strong>Automation:</strong> n8n, BullMQ, ETL pipelines</li>
+        <li><strong>APIs:</strong> REST, SOAP, JWT, OAuth, WhatsApp API</li>
       </ul>
     ),
   },
@@ -61,31 +54,20 @@ const TAB_DATA = [
     id: "certifications",
     content: (
       <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
-        <li>AWS Solution Architect - Associate</li>
-        <li>AWS Cloud Practitioner</li>
-        <li>Oracle Cloud Infrastructure 2024 Certified Application Integration Professional</li>
-        <li>Google Cloud Digital Leader</li>
-        <li>Alibaba Cloud Professional – Cloud Computing Certification</li>
-      </ul>
-    ),
-  },
-  {
-    title: "Completed Courses",
-    id: "courses",
-    content: (
-      <ul className="list-disc pl-4 space-y-2 text-gray-700 dark:text-white/80">
-        <li>The Complete React Developer Course (w/Hooks and Redux) - 2020 </li>
-        <li>NodeJS - The Complete Guide (MVC, REST APIs, GraphQL) </li>
-        <li>The Git & Github Bootcamp </li>
-        <li>Ultimate AWS Certified Solutions Architect Associate 2024 </li>
-        <li>Linux Administration: Build 5 Hands-On Linux Projects 2023</li>
+        <li><strong>AWS Solutions Architect – Associate</strong> (2024-2027)</li>
+        <li><strong>AWS Developer – Associate</strong> (2025-2028)</li>
+        <li><strong>Oracle Cloud Infrastructure 2024</strong> - Application Integration Professional</li>
+        <li><strong>Google Cloud Digital Leader</strong> (2023-2026)</li>
+        <li><strong>Alibaba Cloud Professional</strong> - Cloud Computing</li>
+        <li><strong>Microsoft Power Platform</strong> - Fundamental</li>
+        <li><strong>Katalon Expert Level</strong> - Test Automation</li>
       </ul>
     ),
   },
 ];
 
 const About = ({ isDarkMode }) => {
-  const [tab, setTab] = useState("frontend");
+  const [tab, setTab] = useState("cloud");
   const [isPending, startTransition] = useTransition();
   const handleTabChange = (id) => {
     startTransition(() => {
@@ -144,7 +126,7 @@ const About = ({ isDarkMode }) => {
           className="flex-1"
         >
           <p className="mb-10 max-w-2xl font-Ovo">
-          I am a full-time Technology Analyst specializing in Oracle Cloud projects (OCI, OIC, ERP), where I deliver impactful solutions and drive innovation in technology consulting. Based in Kuala Lumpur, Malaysia, I bring 2 years of professional experience working with top companies like Deloitte Consulting SEA and Finexus Sdn Bhd. Beyond Oracle, my expertise spans full-stack development, with a focus on React, Node.js, Spring, and databases such as MongoDB, MySQL. Additionally, I hold certifications in AWS, Alibaba Cloud, and Google Cloud. Passionate about cloud technology and solution architecture, I constantly strive to harness these technologies to deliver value and foster innovation.
+          I am a Senior Technology Analyst at Deloitte, specializing in Oracle Cloud Integration and enterprise consulting. With a Bachelor of Computer Science (Hons) and 2+ years of professional experience, I deliver impactful cloud solutions across AWS, OCI, GCP, and Alibaba Cloud. My expertise spans Oracle Integration Cloud (OIC) for enterprise projects, ETL pipelines, API-driven integrations, and full-stack development. I hold multiple cloud certifications including AWS Solutions Architect, Oracle Cloud Infrastructure Professional, and Google Cloud Digital Leader. Based in Kuala Lumpur, Malaysia, I'm passionate about cloud-native solutions, automation, and driving innovation in technology consulting.
           </p>
           <motion.ul
             initial={{ opacity: 0 }}
