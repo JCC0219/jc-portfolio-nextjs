@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useDragControls } from "motion/react";
 import Image from "next/image";
 import { assets } from "@/assets/assets";
 
 const initialMessage = {
   role: "assistant",
   content:
-    "Hi, I am JC's AI assistant. Ask me anything about projects, cloud skills, certifications, and experience.",
+    "Hi, I am JC's AI assistant. Ask me anything about my projects, skills, certifications, and experience.",
 };
 
 function extractReplyText(payload) {
@@ -82,8 +82,12 @@ const AIChatPanel = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([initialMessage]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const [sessionId, setSessionId] = useState("");
+  const [viewportHeight, setViewportHeight] = useState(0);
+  const [viewportOffsetTop, setViewportOffsetTop] = useState(0);
   const chatEndRef = useRef(null);
+  const dragControls = useDragControls();
 
   const webhookUrl = process.env.NEXT_PUBLIC_N8N_CHAT_WEBHOOK;
 
@@ -112,7 +116,36 @@ const AIChatPanel = () => {
   }, [messages, isLoading, isOpen]);
 
   useEffect(() => {
-    const isMobileViewport = window.matchMedia("(max-width: 1023px)").matches;
+    const syncViewport = () => {
+      const isMobile = window.matchMedia("(max-width: 1023px)").matches;
+      setIsMobileViewport(isMobile);
+
+      if (!isMobile) {
+        setViewportHeight(0);
+        setViewportOffsetTop(0);
+        return;
+      }
+
+      const visualViewport = window.visualViewport;
+      setViewportHeight(Math.round(visualViewport?.height || window.innerHeight));
+      setViewportOffsetTop(Math.round(visualViewport?.offsetTop || 0));
+    };
+
+    syncViewport();
+
+    const visualViewport = window.visualViewport;
+    window.addEventListener("resize", syncViewport);
+    visualViewport?.addEventListener("resize", syncViewport);
+    visualViewport?.addEventListener("scroll", syncViewport);
+
+    return () => {
+      window.removeEventListener("resize", syncViewport);
+      visualViewport?.removeEventListener("resize", syncViewport);
+      visualViewport?.removeEventListener("scroll", syncViewport);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isMobileViewport) return;
 
     const previousOverflow = document.body.style.overflow;
@@ -121,7 +154,25 @@ const AIChatPanel = () => {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [isOpen]);
+  }, [isOpen, isMobileViewport]);
+
+  const mobileSheetStyle = isMobileViewport
+    ? {
+        height: viewportHeight ? `${viewportHeight}px` : "100dvh",
+        top: `${viewportOffsetTop}px`,
+      }
+    : undefined;
+
+  const handleSheetDragEnd = (_, info) => {
+    if (!isMobileViewport) return;
+
+    const draggedFarEnough = info.offset.y > 90;
+    const draggedFastEnough = info.velocity.y > 500;
+
+    if (draggedFarEnough || draggedFastEnough) {
+      setIsOpen(false);
+    }
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -185,13 +236,28 @@ const AIChatPanel = () => {
         {isOpen ? (
           <motion.aside
             key="chat-panel"
-            initial={{ opacity: 0, x: 30, scale: 0.98 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 28, scale: 0.98 }}
+            initial={isMobileViewport ? { opacity: 0, y: 36 } : { opacity: 0, x: 30, scale: 0.98 }}
+            animate={isMobileViewport ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, scale: 1 }}
+            exit={isMobileViewport ? { opacity: 0, y: 36 } : { opacity: 0, x: 28, scale: 0.98 }}
             transition={{ duration: 0.26, ease: "easeOut" }}
+            drag={isMobileViewport ? "y" : false}
+            dragListener={false}
+            dragControls={dragControls}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.18 }}
+            dragMomentum={false}
+            onDragEnd={handleSheetDragEnd}
             className="fixed inset-0 z-50 h-[100dvh] w-screen bg-white/98 shadow-none backdrop-blur dark:bg-[#070b1f]/98 lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-2xl lg:border lg:border-indigo-200/70 lg:bg-white/72 lg:shadow-[0_20px_70px_rgba(50,70,180,0.16)] lg:backdrop-blur-xl lg:dark:border-indigo-300/30 lg:dark:bg-[#0a1233]/72 lg:dark:shadow-[0_20px_80px_rgba(35,45,150,0.3)]"
+            style={mobileSheetStyle}
           >
             <div className="flex h-full flex-col">
+              <motion.div
+                onPointerDown={(event) => dragControls.start(event)}
+                className="flex cursor-grab touch-none justify-center pt-2 active:cursor-grabbing lg:hidden"
+              >
+                <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-600" />
+              </motion.div>
+
               <header className="border-b border-indigo-200 px-4 py-3 dark:border-indigo-400/20">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-2.5">
