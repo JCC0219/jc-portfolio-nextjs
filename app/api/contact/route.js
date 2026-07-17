@@ -21,8 +21,6 @@ export async function POST(request) {
       body: formData,
         headers: {
           Accept: "application/json",
-          "User-Agent": "Mozilla/5.0 (compatible; MyPortfolio/1.0)",
-          "Referer": "https://jcchiew.com"
         },
     });
 
