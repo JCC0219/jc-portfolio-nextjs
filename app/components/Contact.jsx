@@ -22,9 +22,7 @@ const Contact = () => {
     emailStatus.current = "sending";
     const formData = new FormData(event.target);
 
-    formData.append("access_key", "f3a00a97-ffef-4b2b-8173-b38ad10382f5");
-
-    const response = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch("/api/contact", {
       method: "POST",
       body: formData,
     });
@@ -38,7 +36,7 @@ const Contact = () => {
     } else {
       console.log("Error", data);
       setResult(data.message);
-      emailStatus.current = "success";
+      emailStatus.current = "error";
     }
   };
   return (
