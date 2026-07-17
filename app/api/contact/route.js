@@ -14,15 +14,16 @@ export async function POST(request) {
     const formData = await request.formData();
     formData.append("access_key", accessKey);
 
-    console.log(formData);
+
 
     const web3Response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: formData,
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "Mozilla/5.0 (compatible; MyPortfolio/1.0)"
-      }
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (compatible; MyPortfolio/1.0)",
+          "Referer": "https://jcchiew.com"
+        },
     });
 
     // Ensure response is JSON; otherwise capture raw text for debugging
