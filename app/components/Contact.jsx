@@ -7,36 +7,57 @@ import { motion } from "motion/react";
 const Contact = () => {
   const [result, setResult] = useState("");
   const emailStatus = useRef("hide");
+  const accessKey = process.env.NEXT_PUBLIC_EMAIL_ACCESS_KEY;
+  const statusClasses = {
+    success: "text-green-600 bg-green-100",
+    error: "text-red-600 bg-red-100",
+    sending: "text-yellow-600 bg-yellow-100",
+    hide: "",
+  };
 
-  const statusClass = emailStatus.current === "success"
-  ? "text-green-600 bg-green-100"
-  : emailStatus.current === "error"
-  ? "text-red-600 bg-red-100"
-  : emailStatus.current === "hide"
-  ? "" // No class applied when hidden
-  : "text-yellow-600 bg-yellow-100"; // Default case for any other status
+  const statusClass = statusClasses[emailStatus.current] ?? statusClasses.hide;
+
+  const setStatus = (status, message) => {
+    emailStatus.current = status;
+    setResult(message);
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setResult("Sending....");
-    emailStatus.current = "sending";
-    const formData = new FormData(event.target);
+    setStatus("sending", "Sending....");
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      body: formData,
-    });
+    if (!accessKey) {
+      setStatus("error", "Email access key is missing. Set NEXT_PUBLIC_EMAIL_ACCESS_KEY.");
+      return;
+    }
 
-    const data = await response.json();
+    try {
+      const formData = new FormData(event.target);
+      formData.append("access_key", accessKey);
 
-    if (data.success) {
-      setResult("Form Submitted Successfully");
-      emailStatus.current = "success";
-      event.target.reset();
-    } else {
-      console.log("Error", data);
-      setResult(data.message);
-      emailStatus.current = "error";
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        setStatus("error", "Submission failed. Unexpected response from email service.");
+        return;
+      }
+
+      if (data.success) {
+        setStatus("success", "Form Submitted Successfully");
+        event.target.reset();
+      } else {
+        console.log("Error", data);
+        setStatus("error", data.message || "Unable to submit form right now.");
+      }
+    } catch (error) {
+      console.error("Contact form submit failed:", error);
+      setStatus("error", "Unable to submit form right now.");
     }
   };
   return (
