@@ -6,6 +6,7 @@ import Services from "./components/Services";
 import Work from "./components/Work";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import AIChatPanel from "./components/AIChatPanel";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -42,6 +43,7 @@ export default function Home() {
       <Work isDarkMode={isDarkMode} />
       <Contact isDarkMode={isDarkMode} />
       <Footer isDarkMode={isDarkMode} />
+      <AIChatPanel />
     </>
   );
 }
