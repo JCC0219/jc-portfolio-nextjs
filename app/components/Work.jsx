@@ -5,6 +5,14 @@ import React from "react";
 import { motion } from "motion/react";
 
 const Work = ({ isDarkMode }) => {
+  const handleOpenChatFromProject = () => {
+    window.dispatchEvent(new CustomEvent("jc-ai-chat-open"));
+  };
+
+  const getProjectActionLabel = (project) => {
+    return project.action === "open-chat" ? "Open Chat" : "View Project";
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -46,33 +54,69 @@ const Work = ({ isDarkMode }) => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.9, delay: 0.6 }}
-        className="grid grid-cols-auto-work my-10 gap-5 dark:text-black"
+        className="grid grid-cols-auto-work my-10 gap-6 dark:text-black"
       >
-        {workData.map((project, index) => (
-          <Link key={index} href={project.link} target="_blank" passHref>
+        {workData.map((project, index) => {
+          const isChatAction = project.action === "open-chat";
+
+          const card = (
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.28 }}
               key={index}
-              className="aspect-square bg-no-repeat bg-center bg-cover rounded-lg relative cursor-pointer group"
+              className="group relative aspect-[4/3] sm:aspect-square overflow-hidden rounded-2xl border border-white/45 bg-no-repeat bg-center bg-cover shadow-[0_14px_36px_rgba(46,62,130,0.16)] dark:border-white/10 dark:shadow-[0_16px_44px_rgba(7,12,34,0.45)]"
               style={{ backgroundImage: `url(${project.bgImage})` }}
             >
-              <div className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                <div>
-                  <h2 className="font-semibold text-lg">{project.title}</h2>
-                  <p className="text-xs text-gray-700">{project.description}</p>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/58 via-slate-900/16 to-transparent" />
+              <div className="absolute bottom-3 left-1/2 w-[calc(100%-1.25rem)] -translate-x-1/2 rounded-xl border border-white/50 bg-white/88 px-4 py-3 shadow-[0_12px_24px_rgba(40,56,120,0.22)] backdrop-blur-md transition-all duration-300 group-hover:bottom-4 dark:border-white/15 dark:bg-slate-950/55 dark:shadow-[0_12px_28px_rgba(0,0,0,0.45)]">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="pr-1 text-xl font-semibold leading-tight text-slate-900 dark:text-white">
+                    {project.title}
+                  </h2>
+                  <span className="inline-flex h-9 shrink-0 items-center gap-1 rounded-full bg-indigo-600 px-3 text-xs font-semibold text-white shadow-[0_6px_14px_rgba(67,86,204,0.35)] transition-colors group-hover:bg-indigo-700">
+                    {getProjectActionLabel(project)}
+                    <Image
+                      src={assets.right_arrow_white}
+                      alt="project action"
+                      className="w-3"
+                    />
+                  </span>
                 </div>
-                <div className="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                  <Image
-                    src={assets.send_icon}
-                    alt="send icon"
-                    className="w-5"
-                  />
-                </div>
+                <p
+                  className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200/90"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {project.description}
+                </p>
               </div>
             </motion.div>
-          </Link>
-        ))}
+          );
+
+          if (isChatAction) {
+            return (
+              <button
+                key={index}
+                type="button"
+                onClick={handleOpenChatFromProject}
+                className="text-left"
+                aria-label="Open JC Portfolio AI Assistant chat"
+              >
+                {card}
+              </button>
+            );
+          }
+
+          return (
+            <Link key={index} href={project.link} target="_blank" passHref>
+              {card}
+            </Link>
+          );
+        })}
       </motion.div>
       <motion.a
         initial={{ opacity: 0 }}

@@ -16,6 +16,7 @@ import logo_dark from "./logo-jingcheng-dark.png";
 import mail_icon from "./mail_icon.png";
 import mail_icon_dark from "./mail_icon_dark.png";
 import profile_img from "./profile-img-jc.jpg";
+import profile_img_jc_ai_avatar from "./profile-img-jc-ai-avatar.jpg";
 import download_icon from "./download-icon.png";
 import hand_icon from "./hand-icon.png";
 import header_bg_color from "./header-bg-color.png";
@@ -55,6 +56,7 @@ export const assets = {
   mail_icon,
   mail_icon_dark,
   profile_img,
+  profile_img_jc_ai_avatar,
   download_icon,
   hand_icon,
   header_bg_color,
@@ -77,6 +79,12 @@ export const assets = {
 };
 
 export const workData = [
+  {
+    title: "JC Portfolio AI Assistant",
+    description: "AI Engineer project built on self-hosted n8n in a self-managed k3s environment, with agent orchestration, RAG knowledge database integration, and prompt engineering for portfolio-aware responses.",
+    bgImage: "/Work/JCPortfolioAIAssistant.png",
+    action: "open-chat"
+  },
   {
     title: "AI Appointment Application",
     description: "Flutter Web app with Supabase backend, n8n automation, and WhatsApp API integration",

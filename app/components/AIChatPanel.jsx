@@ -69,7 +69,7 @@ const TypingIndicator = () => {
   return (
     <div className="flex items-end gap-2">
       <Image
-        src={assets.profile_img}
+        src={assets.profile_img_jc_ai_avatar}
         alt="JC assistant avatar"
         className="h-7 w-7 rounded-full border border-indigo-300/60 object-cover dark:border-indigo-300/40"
       />
@@ -143,6 +143,7 @@ const markdownComponents = {
 
 const AIChatPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHighlightActive, setIsHighlightActive] = useState(false);
   const [input, setInput] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [messages, setMessages] = useState([initialMessage]);
@@ -152,6 +153,7 @@ const AIChatPanel = () => {
   const [viewportHeight, setViewportHeight] = useState(0);
   const [viewportOffsetTop, setViewportOffsetTop] = useState(0);
   const chatEndRef = useRef(null);
+  const highlightTimeoutRef = useRef(null);
 
   const webhookUrl = process.env.NEXT_PUBLIC_N8N_CHAT_WEBHOOK;
 
@@ -219,6 +221,30 @@ const AIChatPanel = () => {
       document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, isMobileViewport]);
+
+  useEffect(() => {
+    const handleProjectOpenChat = () => {
+      setIsOpen(true);
+      setIsHighlightActive(true);
+
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+
+      highlightTimeoutRef.current = setTimeout(() => {
+        setIsHighlightActive(false);
+      }, 1700);
+    };
+
+    window.addEventListener("jc-ai-chat-open", handleProjectOpenChat);
+
+    return () => {
+      window.removeEventListener("jc-ai-chat-open", handleProjectOpenChat);
+      if (highlightTimeoutRef.current) {
+        clearTimeout(highlightTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const mobileSheetStyle = isMobileViewport
     ? {
@@ -292,7 +318,11 @@ const AIChatPanel = () => {
             animate={isMobileViewport ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, scale: 1 }}
             exit={isMobileViewport ? { opacity: 0, y: 36 } : { opacity: 0, x: 28, scale: 0.98 }}
             transition={{ duration: 0.26, ease: "easeOut" }}
-            className="fixed inset-x-0 bottom-0 z-50 h-[100dvh] w-screen overflow-hidden rounded-t-3xl border border-white/35 bg-gradient-to-b from-white/78 via-white/66 to-white/58 shadow-[0_24px_70px_rgba(46,61,128,0.24)] backdrop-blur-3xl dark:border-white/10 dark:from-[#131c4a]/82 dark:via-[#0c1231]/74 dark:to-[#070b1f]/72 dark:shadow-[0_24px_82px_rgba(8,13,38,0.62)] lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-3xl lg:border-white/40 lg:from-white/62 lg:via-white/52 lg:to-white/42 lg:dark:border-white/15 lg:dark:from-[#111a45]/66 lg:dark:to-[#070b1f]/56"
+            className={`fixed inset-x-0 bottom-0 z-50 h-[100dvh] w-screen overflow-hidden rounded-t-3xl border border-white/35 bg-gradient-to-b from-white/78 via-white/66 to-white/58 shadow-[0_24px_70px_rgba(46,61,128,0.24)] backdrop-blur-3xl dark:border-white/10 dark:from-[#131c4a]/82 dark:via-[#0c1231]/74 dark:to-[#070b1f]/72 dark:shadow-[0_24px_82px_rgba(8,13,38,0.62)] lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-3xl lg:border-white/40 lg:from-white/62 lg:via-white/52 lg:to-white/42 lg:dark:border-white/15 lg:dark:from-[#111a45]/66 lg:dark:to-[#070b1f]/56 ${
+              isHighlightActive
+                ? "ring-2 ring-indigo-400/70 shadow-[0_0_0_4px_rgba(129,140,248,0.22),0_24px_82px_rgba(8,13,38,0.62)]"
+                : ""
+            }`}
             style={mobileSheetStyle}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.72),transparent_58%)] dark:bg-[radial-gradient(circle_at_top,rgba(149,173,255,0.18),transparent_60%)]" />
@@ -303,13 +333,13 @@ const AIChatPanel = () => {
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-2.5">
                     <Image
-                      src={assets.profile_img}
+                      src={assets.profile_img_jc_ai_avatar}
                       alt="JC assistant avatar"
                       className="h-8 w-8 rounded-full border border-indigo-300/60 object-cover dark:border-indigo-300/40"
                     />
                     <div className="min-w-0">
                       <h3 className="truncate text-base font-semibold text-slate-900 dark:text-white">
-                        JC AI Assistant
+                        JC Portfolio AI Assistant
                       </h3>
                       <p className="truncate text-xs text-slate-600 dark:text-slate-300/90">
                         Ask me anything about my background.
@@ -356,7 +386,7 @@ const AIChatPanel = () => {
                       {message.role === "assistant" ? (
                         <div className="flex max-w-[82%] items-end gap-2">
                           <Image
-                            src={assets.profile_img}
+                            src={assets.profile_img_jc_ai_avatar}
                             alt="JC assistant avatar"
                             className="h-7 w-7 rounded-full border border-indigo-300/60 object-cover dark:border-indigo-300/40"
                           />
@@ -444,7 +474,9 @@ const AIChatPanel = () => {
             onClick={() => setIsOpen(true)}
             type="button"
             whileHover={{ x: -2, scale: 1.01 }}
-            className="fixed bottom-5 right-5 z-50 overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-white/56 to-[#e8efff]/46 px-3.5 py-2.5 text-left shadow-[0_14px_34px_rgba(53,74,160,0.2)] backdrop-blur-xl transition-transform dark:border-white/18 dark:from-[#1a2661]/58 dark:to-[#0d163f]/52 dark:shadow-[0_18px_44px_rgba(26,42,128,0.42)] lg:bottom-auto lg:right-6 lg:top-1/2 lg:-translate-y-1/2"
+            className={`fixed bottom-5 right-5 z-50 overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-white/56 to-[#e8efff]/46 px-3.5 py-2.5 text-left shadow-[0_14px_34px_rgba(53,74,160,0.2)] backdrop-blur-xl transition-transform dark:border-white/18 dark:from-[#1a2661]/58 dark:to-[#0d163f]/52 dark:shadow-[0_18px_44px_rgba(26,42,128,0.42)] lg:bottom-auto lg:right-6 lg:top-1/2 lg:-translate-y-1/2 ${
+              isHighlightActive ? "animate-pulse ring-2 ring-indigo-400/75" : ""
+            }`}
             aria-label="Open AI assistant"
           >
             <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,255,255,0.8),transparent_45%)] dark:bg-[radial-gradient(circle_at_20%_0%,rgba(157,183,255,0.25),transparent_45%)]" />
@@ -461,10 +493,10 @@ const AIChatPanel = () => {
               </div>
               <div className="relative z-10 pr-0.5 leading-tight">
                 <p className="text-[10px] font-bold uppercase tracking-[0.11em] text-indigo-700 dark:text-indigo-200">
-                  AI Assistant
+                  JC AI Assistant
                 </p>
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
-                  Ask Me
+                  Let’s Talk
                 </p>
               </div>
             </div>
