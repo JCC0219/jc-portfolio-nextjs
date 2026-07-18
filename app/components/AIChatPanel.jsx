@@ -3,6 +3,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useDragControls } from "motion/react";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
 import { assets } from "@/assets/assets";
 
 const initialMessage = {
@@ -75,6 +78,45 @@ const TypingIndicator = () => {
       </motion.div>
     </div>
   );
+};
+
+const markdownComponents = {
+  h1: ({ ...props }) => <h1 className="mb-2 text-base font-semibold" {...props} />,
+  h2: ({ ...props }) => <h2 className="mb-2 text-sm font-semibold" {...props} />,
+  h3: ({ ...props }) => <h3 className="mb-2 text-sm font-semibold" {...props} />,
+  p: ({ ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+  ul: ({ ...props }) => <ul className="mb-2 list-disc pl-5" {...props} />,
+  ol: ({ ...props }) => <ol className="mb-2 list-decimal pl-5" {...props} />,
+  li: ({ ...props }) => <li className="mb-1" {...props} />,
+  a: ({ ...props }) => (
+    <a
+      className="underline decoration-indigo-400 underline-offset-2 hover:text-indigo-700 dark:hover:text-indigo-300"
+      target="_blank"
+      rel="noopener noreferrer"
+      {...props}
+    />
+  ),
+  code: ({ inline, className, children, ...props }) => {
+    if (inline) {
+      return (
+        <code
+          className="rounded bg-indigo-100 px-1 py-0.5 font-mono text-[0.84em] dark:bg-indigo-500/20"
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    }
+
+    return (
+      <code
+        className={`block overflow-x-auto rounded-lg bg-indigo-100/70 px-2.5 py-2 font-mono text-[0.84em] dark:bg-indigo-500/20 ${className || ""}`}
+        {...props}
+      >
+        {children}
+      </code>
+    );
+  },
 };
 
 const AIChatPanel = () => {
@@ -317,7 +359,12 @@ const AIChatPanel = () => {
                             className="h-7 w-7 rounded-full border border-indigo-300/60 object-cover dark:border-indigo-300/40"
                           />
                           <div className="w-fit max-w-[78%] rounded-2xl rounded-bl-md border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm leading-6 whitespace-pre-wrap break-words text-slate-800 dark:border-indigo-400/35 dark:bg-[#161f49]/95 dark:text-slate-100">
-                            {message.content}
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm, remarkBreaks]}
+                              components={markdownComponents}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
                           </div>
                         </div>
                       ) : (
