@@ -68,9 +68,9 @@ const Work = ({ isDarkMode }) => {
               style={{ backgroundImage: `url(${project.bgImage})` }}
             >
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/58 via-slate-900/16 to-transparent" />
-              <div className="absolute bottom-3 left-1/2 w-[calc(100%-1.25rem)] -translate-x-1/2 rounded-xl border border-white/50 bg-white/88 px-4 py-3 shadow-[0_12px_24px_rgba(40,56,120,0.22)] backdrop-blur-md transition-all duration-300 group-hover:bottom-4 dark:border-white/15 dark:bg-slate-950/55 dark:shadow-[0_12px_28px_rgba(0,0,0,0.45)]">
+              <div className="absolute bottom-3 left-1/2 w-[calc(100%-1.25rem)] -translate-x-1/2 rounded-xl border border-white/70 bg-white px-4 py-3 shadow-[0_12px_24px_rgba(40,56,120,0.22)] backdrop-blur-lg transition-all duration-300 group-hover:bottom-4 dark:border-white/15 dark:bg-slate-950/55 dark:shadow-[0_12px_28px_rgba(0,0,0,0.45)]">
                 <div className="flex items-center justify-between gap-3">
-                  <h2 className="pr-1 text-xl font-semibold leading-tight text-slate-900 dark:text-white">
+                  <h2 className="pr-1 text-xl font-semibold leading-tight text-slate-950 dark:text-white">
                     {project.title}
                   </h2>
                   <span className="inline-flex h-9 shrink-0 items-center gap-1 rounded-full bg-indigo-600 px-3 text-xs font-semibold text-white shadow-[0_6px_14px_rgba(67,86,204,0.35)] transition-colors group-hover:bg-indigo-700">
@@ -83,7 +83,7 @@ const Work = ({ isDarkMode }) => {
                   </span>
                 </div>
                 <p
-                  className="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200/90"
+                  className="mt-2 text-sm leading-6 text-slate-800 dark:text-slate-200/90"
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 4,
