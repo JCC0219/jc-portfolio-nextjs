@@ -397,7 +397,7 @@ const AIChatPanel = () => {
                         : "Set NEXT_PUBLIC_N8N_CHAT_WEBHOOK in .env"
                     }
                     disabled={!webhookUrl}
-                    className="w-full bg-transparent px-2 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none dark:text-white dark:placeholder:text-slate-400"
+                    className="w-full bg-transparent px-2 text-base text-slate-900 placeholder:text-slate-500 focus:outline-none dark:text-white dark:placeholder:text-slate-400 lg:text-sm"
                   />
                   <button
                     type="submit"
