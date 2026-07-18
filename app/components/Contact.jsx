@@ -110,7 +110,7 @@ const Contact = () => {
             name="name"
             placeholder="Enter your name"
             required
-            className="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90"
+            className="flex-1 p-3 outline-none rounded-lg border border-white/60 bg-white/95 backdrop-blur-lg shadow-[0_6px_16px_rgba(40,56,120,0.1)] transition-all duration-300 placeholder-slate-500 focus:border-white/80 focus:shadow-[0_8px_24px_rgba(40,56,120,0.2)] dark:border-white/15 dark:bg-slate-950/55 dark:placeholder-slate-400 dark:focus:border-white/25"
           />
           <motion.input
             initial={{ x: 50, opacity: 0 }}
@@ -120,7 +120,7 @@ const Contact = () => {
             name="email"
             placeholder="Enter your email"
             required
-            className=" p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white  dark:bg-darkHover/30 dark:border-white/90"
+            className="flex-1 p-3 outline-none rounded-lg border border-white/60 bg-white/95 backdrop-blur-lg shadow-[0_6px_16px_rgba(40,56,120,0.1)] transition-all duration-300 placeholder-slate-500 focus:border-white/80 focus:shadow-[0_8px_24px_rgba(40,56,120,0.2)] dark:border-white/15 dark:bg-slate-950/55 dark:placeholder-slate-400 dark:focus:border-white/25"
           />
         </div>
         <motion.textarea
@@ -130,13 +130,13 @@ const Contact = () => {
           rows="6"
           name="message"
           placeholder="Enter your message"
-          className="w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6  dark:bg-darkHover/30 dark:border-white/90"
+          className="w-full p-4 outline-none rounded-lg border border-white/60 bg-white/95 backdrop-blur-lg shadow-[0_6px_16px_rgba(40,56,120,0.1)] mb-6 transition-all duration-300 placeholder-slate-500 focus:border-white/80 focus:shadow-[0_8px_24px_rgba(40,56,120,0.2)] dark:border-white/15 dark:bg-slate-950/55 dark:placeholder-slate-400 dark:focus:border-white/25 resize-none"
         ></motion.textarea>
         <motion.button
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
           type="submit"
-          className="py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500 dark:bg-transparent dark:border-[0.5px] dark:hover:bg-darkHover"
+          className="py-3 px-8 w-max flex items-center justify-between gap-2 bg-indigo-600 text-white rounded-full mx-auto hover:bg-indigo-700 transition-all duration-300 shadow-[0_8px_20px_rgba(79,70,229,0.3)] hover:shadow-[0_12px_28px_rgba(79,70,229,0.4)] dark:bg-indigo-600 dark:hover:bg-indigo-700"
         >
           Submit now{" "}
           <Image src={assets.right_arrow_white} alt="" className="w-4" />

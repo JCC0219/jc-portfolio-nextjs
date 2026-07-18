@@ -31,9 +31,9 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
         <Image src={assets.header_bg_color} alt="" className="w-full" />
       </div>
       <nav
-        className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 ${
+        className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 transition-all duration-300 ${
           isScroll
-            ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20 "
+            ? "bg-white/95 backdrop-blur-lg shadow-[0_4px_16px_rgba(40,56,120,0.1)] dark:bg-slate-950/55 dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
             : ""
         }`}
       >
@@ -45,10 +45,10 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
           />
         </a>
         <ul
-          className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ${
+          className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 transition-all duration-300 ${
             isScroll
               ? ""
-              : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"
+              : "bg-white/95 backdrop-blur-lg shadow-[0_6px_16px_rgba(40,56,120,0.1)] dark:border border-white/15 dark:bg-slate-950/40 dark:backdrop-blur-lg"
           }`}
         >
           <li>
@@ -92,7 +92,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
           </button>
           <a
             href="#contact"
-            className="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo dark:border-white/50"
+            className="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-white/60 rounded-full ml-4 font-Ovo bg-white/90 backdrop-blur-sm text-slate-900 transition-all duration-300 hover:bg-white hover:border-white/80 dark:border-white/15 dark:bg-slate-950/40 dark:text-white dark:hover:bg-slate-950/60"
           >
             Contact{" "}
             <Image
@@ -114,7 +114,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
 
         <ul
           ref={sideMenuRef}
-          className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white"
+          className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-white/95 backdrop-blur-lg border-l border-white/60 shadow-[0_8px_32px_rgba(40,56,120,0.2)] transition duration-500 dark:bg-slate-950/55 dark:border-l dark:border-white/15 dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] dark:text-white"
         >
           <div className="absolute right-6 top-6">
             <Image

@@ -136,8 +136,9 @@ const About = ({ isDarkMode }) => {
           >
             {infoList.map(({ icon, iconDark, title, description }, index) => (
               <motion.li
-                whileHover={{ scale: 1.05 }}
-                className="border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:shadow-white dark:hover:bg-darkHover/50"
+                whileHover={{ scale: 1.05, y: -4 }}
+                transition={{ duration: 0.28 }}
+                className="rounded-xl border border-white/60 bg-white/95 p-6 cursor-pointer backdrop-blur-lg shadow-[0_12px_24px_rgba(40,56,120,0.15)] transition-all duration-300 dark:border-white/15 dark:bg-slate-950/55 dark:shadow-[0_12px_28px_rgba(0,0,0,0.35)]"
                 key={index}
               >
                 <Image
@@ -145,10 +146,10 @@ const About = ({ isDarkMode }) => {
                   alt={title}
                   className="w-7 mt-3"
                 />
-                <h3 className="my-4 font-semibold text-gray-700 dark:text-white">
+                <h3 className="my-4 font-semibold text-slate-900 dark:text-white">
                   {title}
                 </h3>
-                <p className="text-gray-600 text-sm dark:text-white/80">
+                <p className="text-slate-700 text-sm dark:text-slate-200/90">
                   {description}
                 </p>
               </motion.li>

@@ -79,8 +79,7 @@ const Header = () => {
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 1 }}
           href="#contact"
-          className="px-10 py-3 border rounded-full bg-gradient-to-r from-[#b820e6] to-[#da7d20] text-white flex items-center gap-2 dark:border-none 
-     "
+          className="px-10 py-3 border border-white/60 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white flex items-center gap-2 backdrop-blur-sm transition-all duration-300 shadow-[0_8px_20px_rgba(79,70,229,0.3)] hover:shadow-[0_12px_28px_rgba(79,70,229,0.4)]"
         >
           contact me
           <Image src={assets.right_arrow_white} alt="" className="w-4" />
@@ -91,7 +90,7 @@ const Header = () => {
           transition={{ duration: 0.6, delay: 1.2 }}
           href="/Chiew Jing Cheng CV v5.1.pdf"
           download
-          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 dark:text-black bg-white "
+          className="px-10 py-3 border border-white/60 rounded-full bg-white/90 backdrop-blur-sm text-slate-900 flex items-center gap-2 hover:bg-white transition-all duration-300 shadow-[0_8px_20px_rgba(40,56,120,0.15)] hover:shadow-[0_12px_28px_rgba(40,56,120,0.25)] dark:border-white/15 dark:bg-slate-950/40 dark:text-white dark:hover:bg-slate-950/60"
         >
           my resume
           <Image src={assets.download_icon} alt="" className="w-4" />
