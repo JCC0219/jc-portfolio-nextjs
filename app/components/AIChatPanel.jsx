@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useDragControls } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
@@ -152,7 +152,6 @@ const AIChatPanel = () => {
   const [viewportHeight, setViewportHeight] = useState(0);
   const [viewportOffsetTop, setViewportOffsetTop] = useState(0);
   const chatEndRef = useRef(null);
-  const dragControls = useDragControls();
 
   const webhookUrl = process.env.NEXT_PUBLIC_N8N_CHAT_WEBHOOK;
 
@@ -223,21 +222,10 @@ const AIChatPanel = () => {
 
   const mobileSheetStyle = isMobileViewport
     ? {
-        height: viewportHeight ? `${viewportHeight}px` : "100dvh",
-        top: `${viewportOffsetTop}px`,
+        height: viewportHeight ? `${Math.max(viewportHeight - 10, 0)}px` : "calc(100dvh - 10px)",
+        top: `${viewportOffsetTop + 10}px`,
       }
     : undefined;
-
-  const handleSheetDragEnd = (_, info) => {
-    if (!isMobileViewport) return;
-
-    const draggedFarEnough = info.offset.y > 90;
-    const draggedFastEnough = info.velocity.y > 500;
-
-    if (draggedFarEnough || draggedFastEnough) {
-      setIsOpen(false);
-    }
-  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -304,26 +292,14 @@ const AIChatPanel = () => {
             animate={isMobileViewport ? { opacity: 1, y: 0 } : { opacity: 1, x: 0, scale: 1 }}
             exit={isMobileViewport ? { opacity: 0, y: 36 } : { opacity: 0, x: 28, scale: 0.98 }}
             transition={{ duration: 0.26, ease: "easeOut" }}
-            drag={isMobileViewport ? "y" : false}
-            dragListener={false}
-            dragControls={dragControls}
-            dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.18 }}
-            dragMomentum={false}
-            onDragEnd={handleSheetDragEnd}
-            className="fixed inset-0 z-50 h-[100dvh] w-screen overflow-hidden bg-gradient-to-b from-white/88 to-white/72 shadow-none backdrop-blur-2xl dark:from-[#0d1434]/88 dark:to-[#070b1f]/78 lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-3xl lg:border lg:border-white/40 lg:bg-gradient-to-b lg:from-white/62 lg:to-white/42 lg:shadow-[0_22px_70px_rgba(40,56,120,0.26)] lg:backdrop-blur-2xl lg:dark:border-white/15 lg:dark:from-[#111a45]/66 lg:dark:to-[#070b1f]/56 lg:dark:shadow-[0_24px_78px_rgba(15,24,70,0.55)]"
+            className="fixed inset-x-0 bottom-0 z-50 h-[100dvh] w-screen overflow-hidden rounded-t-3xl border border-white/35 bg-gradient-to-b from-white/78 via-white/66 to-white/58 shadow-[0_24px_70px_rgba(46,61,128,0.24)] backdrop-blur-3xl dark:border-white/10 dark:from-[#131c4a]/82 dark:via-[#0c1231]/74 dark:to-[#070b1f]/72 dark:shadow-[0_24px_82px_rgba(8,13,38,0.62)] lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-3xl lg:border-white/40 lg:from-white/62 lg:via-white/52 lg:to-white/42 lg:dark:border-white/15 lg:dark:from-[#111a45]/66 lg:dark:to-[#070b1f]/56"
             style={mobileSheetStyle}
           >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_58%)] dark:bg-[radial-gradient(circle_at_top,rgba(149,173,255,0.14),transparent_60%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.72),transparent_58%)] dark:bg-[radial-gradient(circle_at_top,rgba(149,173,255,0.18),transparent_60%)]" />
+            <div className="pointer-events-none absolute -left-20 top-20 h-60 w-60 rounded-full bg-indigo-300/25 blur-3xl dark:bg-indigo-400/20" />
+            <div className="pointer-events-none absolute -right-16 bottom-24 h-56 w-56 rounded-full bg-cyan-200/25 blur-3xl dark:bg-cyan-400/10" />
             <div className="flex h-full flex-col">
-              <motion.div
-                onPointerDown={(event) => dragControls.start(event)}
-                className="flex cursor-grab touch-none justify-center pt-2 active:cursor-grabbing lg:hidden"
-              >
-                <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-600" />
-              </motion.div>
-
-              <header className="border-b border-slate-300/60 bg-white/38 px-4 py-3 backdrop-blur-lg dark:border-white/10 dark:bg-white/5">
+              <header className="border-b border-slate-300/50 bg-white/34 px-4 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-2.5">
                     <Image
@@ -355,7 +331,7 @@ const AIChatPanel = () => {
                 </div>
               </header>
 
-              <div className="chat-scrollbar flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-white/8 to-transparent px-4 py-4 dark:from-white/[0.03]">
+              <div className="chat-scrollbar flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-white/14 to-transparent px-4 py-4 dark:from-white/[0.04]">
                 <AnimatePresence initial={false}>
                   {messages.map((message, index) => (
                     <motion.div
@@ -421,7 +397,7 @@ const AIChatPanel = () => {
 
               <form
                 onSubmit={onSubmit}
-                className="border-t border-slate-300/50 bg-white/22 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg dark:border-white/10 dark:bg-white/[0.03]"
+                className="border-t border-slate-300/45 bg-white/28 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.05]"
               >
                 <div
                   className={`relative rounded-[2.15rem] border bg-white/65 shadow-[0_14px_30px_rgba(72,87,150,0.2)] backdrop-blur-md transition-all duration-200 dark:border-white/20 dark:bg-white/10 dark:shadow-[0_14px_36px_rgba(10,16,44,0.4)] ${
@@ -468,19 +444,29 @@ const AIChatPanel = () => {
             onClick={() => setIsOpen(true)}
             type="button"
             whileHover={{ x: -2, scale: 1.01 }}
-            className="fixed bottom-5 right-5 z-50 rounded-full border border-indigo-200 bg-white/82 px-2.5 py-2 text-left shadow-[0_14px_35px_rgba(50,70,180,0.22)] backdrop-blur-md dark:border-indigo-300/40 dark:bg-[#111a43]/82 dark:shadow-[0_16px_50px_rgba(54,74,255,0.4)] lg:bottom-auto lg:right-6 lg:top-1/2 lg:-translate-y-1/2 lg:px-2 lg:py-1.5"
+            className="fixed bottom-5 right-5 z-50 overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-white/56 to-[#e8efff]/46 px-3.5 py-2.5 text-left shadow-[0_14px_34px_rgba(53,74,160,0.2)] backdrop-blur-xl transition-transform dark:border-white/18 dark:from-[#1a2661]/58 dark:to-[#0d163f]/52 dark:shadow-[0_18px_44px_rgba(26,42,128,0.42)] lg:bottom-auto lg:right-6 lg:top-1/2 lg:-translate-y-1/2"
+            aria-label="Open AI assistant"
           >
-            <div className="flex items-center gap-2">
-              <Image
-                src="/assistant-bot.svg"
-                alt="JC AI bot avatar"
-                className="h-8 w-8 rounded-full border border-indigo-300/60 object-cover dark:border-indigo-300/40 lg:h-7 lg:w-7"
-                width={32}
-                height={32}
-              />
-              <span className="hidden pr-1 text-xs font-semibold text-slate-800 dark:text-white/95 lg:inline">
-                Ask JC
-              </span>
+            <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(255,255,255,0.8),transparent_45%)] dark:bg-[radial-gradient(circle_at_20%_0%,rgba(157,183,255,0.25),transparent_45%)]" />
+            <div className="flex items-center gap-2.5">
+              <div className="relative z-10 grid h-10 w-10 place-items-center rounded-xl border border-indigo-200/90 bg-gradient-to-br from-indigo-100 via-white to-indigo-50 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] dark:border-indigo-200/25 dark:from-indigo-300/25 dark:via-indigo-400/12 dark:to-indigo-500/8">
+                <Image
+                  src="/assistant-bot.svg"
+                  alt="JC AI bot avatar"
+                  className="h-6 w-6 object-contain"
+                  width={24}
+                  height={24}
+                />
+                <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-[#101a44]" />
+              </div>
+              <div className="relative z-10 pr-0.5 leading-tight">
+                <p className="text-[10px] font-bold uppercase tracking-[0.11em] text-indigo-700 dark:text-indigo-200">
+                  AI Assistant
+                </p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">
+                  Ask Me
+                </p>
+              </div>
             </div>
           </motion.button>
         )}

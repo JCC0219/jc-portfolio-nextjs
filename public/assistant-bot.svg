@@ -1,9 +1,19 @@
 <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="96" height="96" rx="48" fill="#0E163A"/>
-  <rect x="24" y="28" width="48" height="38" rx="12" fill="#1A2A68" stroke="#89A6FF" stroke-width="2"/>
-  <circle cx="38" cy="46" r="5" fill="#89A6FF"/>
-  <circle cx="58" cy="46" r="5" fill="#89A6FF"/>
-  <rect x="40" y="20" width="16" height="6" rx="3" fill="#89A6FF"/>
-  <rect x="45" y="14" width="6" height="8" rx="3" fill="#89A6FF"/>
-  <rect x="36" y="56" width="24" height="4" rx="2" fill="#89A6FF"/>
+  <defs>
+    <linearGradient id="botBody" x1="24" y1="28" x2="72" y2="66" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5479E8"/>
+      <stop offset="1" stop-color="#314AB2"/>
+    </linearGradient>
+    <linearGradient id="botAccent" x1="36" y1="14" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF0FF"/>
+      <stop offset="1" stop-color="#C9D6FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="28" width="48" height="38" rx="12" fill="url(#botBody)" stroke="#415DC7" stroke-width="2"/>
+  <circle cx="38" cy="46" r="5" fill="url(#botAccent)"/>
+  <circle cx="58" cy="46" r="5" fill="url(#botAccent)"/>
+  <rect x="40" y="20" width="16" height="6" rx="3" fill="#C9D6FF"/>
+  <rect x="45" y="14" width="6" height="8" rx="3" fill="#9FB7FF"/>
+  <rect x="36" y="56" width="24" height="4" rx="2" fill="#E7EEFF"/>
 </svg>
