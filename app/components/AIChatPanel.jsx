@@ -12,7 +12,29 @@ const initialMessage = {
   role: "assistant",
   content:
     "Hi, I am JC's AI assistant. Ask me anything about my projects, skills, certifications, and experience.",
+  createdAt: Date.now(),
 };
+
+function createChatMessage(role, content) {
+  return {
+    role,
+    content,
+    createdAt: Date.now(),
+  };
+}
+
+function formatMessageTime(createdAt) {
+  if (!createdAt) return "";
+
+  try {
+    return new Date(createdAt).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch {
+    return "";
+  }
+}
 
 function extractReplyText(payload) {
   if (!payload) return "I could not read the response. Please try again.";
@@ -55,7 +77,7 @@ const TypingIndicator = () => {
         initial={{ opacity: 0, x: -8, y: 10, scale: 0.96 }}
         animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
         transition={{ duration: 0.28, ease: "easeOut" }}
-        className="w-fit max-w-[78%] rounded-2xl border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-900 dark:border-indigo-400/35 dark:bg-[#161f49]/95 dark:text-indigo-100"
+        className="w-fit max-w-[78%] rounded-2xl border border-white/50 bg-white/70 px-3 py-2 text-sm text-slate-800 shadow-[0_8px_24px_rgba(75,90,150,0.14)] backdrop-blur-md dark:border-white/15 dark:bg-white/10 dark:text-indigo-100"
       >
         <div className="flex items-center gap-2">
           <span className="font-medium">AI is typing</span>
@@ -122,6 +144,7 @@ const markdownComponents = {
 const AIChatPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const [messages, setMessages] = useState([initialMessage]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(false);
@@ -223,7 +246,7 @@ const AIChatPanel = () => {
 
     const userMessage = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setMessages((prev) => [...prev, createChatMessage("user", userMessage)]);
     setIsLoading(true);
 
     try {
@@ -255,17 +278,16 @@ const AIChatPanel = () => {
       const assistantReply = extractReplyText(payload);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: assistantReply },
+        createChatMessage("assistant", assistantReply),
       ]);
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content:
-            error?.message ||
-            "Sorry, I cannot reply right now. Please try again in a moment.",
-        },
+        createChatMessage(
+          "assistant",
+          error?.message ||
+            "Sorry, I cannot reply right now. Please try again in a moment."
+        ),
       ]);
     } finally {
       setIsLoading(false);
@@ -289,9 +311,10 @@ const AIChatPanel = () => {
             dragElastic={{ top: 0, bottom: 0.18 }}
             dragMomentum={false}
             onDragEnd={handleSheetDragEnd}
-            className="fixed inset-0 z-50 h-[100dvh] w-screen bg-white/98 shadow-none backdrop-blur dark:bg-[#070b1f]/98 lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-2xl lg:border lg:border-indigo-200/70 lg:bg-white/72 lg:shadow-[0_20px_70px_rgba(50,70,180,0.16)] lg:backdrop-blur-xl lg:dark:border-indigo-300/30 lg:dark:bg-[#0a1233]/72 lg:dark:shadow-[0_20px_80px_rgba(35,45,150,0.3)]"
+            className="fixed inset-0 z-50 h-[100dvh] w-screen overflow-hidden bg-gradient-to-b from-white/88 to-white/72 shadow-none backdrop-blur-2xl dark:from-[#0d1434]/88 dark:to-[#070b1f]/78 lg:inset-auto lg:right-6 lg:top-24 lg:h-[calc(100vh-7.5rem)] lg:w-[360px] lg:rounded-3xl lg:border lg:border-white/40 lg:bg-gradient-to-b lg:from-white/62 lg:to-white/42 lg:shadow-[0_22px_70px_rgba(40,56,120,0.26)] lg:backdrop-blur-2xl lg:dark:border-white/15 lg:dark:from-[#111a45]/66 lg:dark:to-[#070b1f]/56 lg:dark:shadow-[0_24px_78px_rgba(15,24,70,0.55)]"
             style={mobileSheetStyle}
           >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.52),transparent_58%)] dark:bg-[radial-gradient(circle_at_top,rgba(149,173,255,0.14),transparent_60%)]" />
             <div className="flex h-full flex-col">
               <motion.div
                 onPointerDown={(event) => dragControls.start(event)}
@@ -300,7 +323,7 @@ const AIChatPanel = () => {
                 <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-600" />
               </motion.div>
 
-              <header className="border-b border-indigo-200 px-4 py-3 dark:border-indigo-400/20">
+              <header className="border-b border-slate-300/60 bg-white/38 px-4 py-3 backdrop-blur-lg dark:border-white/10 dark:bg-white/5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-2.5">
                     <Image
@@ -312,7 +335,7 @@ const AIChatPanel = () => {
                       <h3 className="truncate text-base font-semibold text-slate-900 dark:text-white">
                         JC AI Assistant
                       </h3>
-                      <p className="truncate text-xs text-slate-500 dark:text-slate-300">
+                      <p className="truncate text-xs text-slate-600 dark:text-slate-300/90">
                         Ask me anything about my background.
                       </p>
                     </div>
@@ -320,16 +343,19 @@ const AIChatPanel = () => {
 
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="h-8 w-8 rounded-full border border-indigo-200 text-sm text-slate-600 hover:bg-indigo-100 dark:border-indigo-300/30 dark:text-slate-200 dark:hover:bg-indigo-400/20 lg:h-7 lg:w-7"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-300/70 bg-white/58 text-slate-700 shadow-[0_6px_16px_rgba(76,88,132,0.16)] transition-all hover:bg-white/80 hover:shadow-[0_8px_20px_rgba(76,88,132,0.2)] dark:border-white/15 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-white/15 lg:h-7 lg:w-7"
                     type="button"
                     aria-label="Close chat"
                   >
-                    x
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4">
+                      <path d="M7 7L17 17" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                      <path d="M17 7L7 17" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                    </svg>
                   </button>
                 </div>
               </header>
 
-              <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+              <div className="chat-scrollbar flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-white/8 to-transparent px-4 py-4 dark:from-white/[0.03]">
                 <AnimatePresence initial={false}>
                   {messages.map((message, index) => (
                     <motion.div
@@ -352,24 +378,34 @@ const AIChatPanel = () => {
                       className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       {message.role === "assistant" ? (
-                        <div className="flex items-end gap-2">
+                        <div className="flex max-w-[82%] items-end gap-2">
                           <Image
                             src={assets.profile_img}
                             alt="JC assistant avatar"
                             className="h-7 w-7 rounded-full border border-indigo-300/60 object-cover dark:border-indigo-300/40"
                           />
-                          <div className="w-fit max-w-[78%] rounded-2xl rounded-bl-md border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm leading-6 whitespace-pre-wrap break-words text-slate-800 dark:border-indigo-400/35 dark:bg-[#161f49]/95 dark:text-slate-100">
-                            <ReactMarkdown
-                              remarkPlugins={[remarkGfm, remarkBreaks]}
-                              components={markdownComponents}
-                            >
-                              {message.content}
-                            </ReactMarkdown>
+                          <div className="min-w-0">
+                            <div className="w-fit max-w-full rounded-2xl rounded-bl-md border border-white/45 bg-white/75 px-3 py-2 text-sm leading-6 whitespace-pre-wrap break-words text-slate-800 shadow-[0_10px_22px_rgba(90,104,160,0.14)] backdrop-blur-md dark:border-white/15 dark:bg-white/10 dark:text-slate-100">
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm, remarkBreaks]}
+                                components={markdownComponents}
+                              >
+                                {message.content}
+                              </ReactMarkdown>
+                            </div>
+                            <p className="mt-1 pl-1 text-[11px] leading-none text-slate-500 dark:text-slate-400">
+                              {formatMessageTime(message.createdAt)}
+                            </p>
                           </div>
                         </div>
                       ) : (
-                        <div className="w-fit max-w-[78%] rounded-2xl rounded-br-md bg-indigo-600 px-3 py-2 text-sm leading-6 whitespace-pre-wrap break-words text-white dark:bg-indigo-500">
-                          {message.content}
+                        <div className="max-w-[82%] min-w-0">
+                          <div className="ml-auto w-fit max-w-full rounded-2xl rounded-br-md border border-indigo-400/30 bg-gradient-to-br from-indigo-500 to-indigo-600 px-3 py-2 text-sm leading-6 whitespace-pre-wrap break-words text-white shadow-[0_10px_26px_rgba(60,85,200,0.34)] dark:border-indigo-300/30 dark:from-indigo-500 dark:to-indigo-600">
+                            {message.content}
+                          </div>
+                          <p className="mt-1 pr-1 text-right text-[11px] leading-none text-slate-500 dark:text-slate-400">
+                            {formatMessageTime(message.createdAt)}
+                          </p>
                         </div>
                       )}
                     </motion.div>
@@ -385,26 +421,38 @@ const AIChatPanel = () => {
 
               <form
                 onSubmit={onSubmit}
-                className="border-t border-indigo-200 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 dark:border-indigo-400/20"
+                className="border-t border-slate-300/50 bg-white/22 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg dark:border-white/10 dark:bg-white/[0.03]"
               >
-                <div className="flex items-center gap-2 rounded-xl border border-indigo-200 bg-slate-50 px-2 py-2 dark:border-indigo-300/30 dark:bg-[#0f1533]">
+                <div
+                  className={`relative rounded-[2.15rem] border bg-white/65 shadow-[0_14px_30px_rgba(72,87,150,0.2)] backdrop-blur-md transition-all duration-200 dark:border-white/20 dark:bg-white/10 dark:shadow-[0_14px_36px_rgba(10,16,44,0.4)] ${
+                    isInputFocused
+                      ? "border-slate-400/80 px-4 py-2"
+                      : "border-slate-300/70 px-4 py-1.5"
+                  }`}
+                >
                   <input
                     value={input}
                     onChange={(event) => setInput(event.target.value)}
+                    onFocus={() => setIsInputFocused(true)}
+                    onBlur={() => setIsInputFocused(false)}
                     placeholder={
                       webhookUrl
-                        ? "Ask anything about my experience, skills, or projects..."
+                        ? "Ask about my projects, skills, or experience"
                         : "Set NEXT_PUBLIC_N8N_CHAT_WEBHOOK in .env"
                     }
                     disabled={!webhookUrl}
-                    className="w-full bg-transparent px-2 text-base text-slate-900 placeholder:text-slate-500 focus:outline-none dark:text-white dark:placeholder:text-slate-400 lg:text-sm"
+                    className="w-full bg-transparent px-2 py-1 pr-14 text-base leading-6 text-slate-800 placeholder:text-slate-500 focus:outline-none dark:text-slate-100 dark:placeholder:text-slate-400"
                   />
                   <button
                     type="submit"
                     disabled={!canSend}
-                    className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-400 dark:bg-indigo-500 dark:disabled:bg-slate-600"
+                    className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-[0_7px_14px_rgba(66,94,210,0.35)] transition-colors hover:from-indigo-600 hover:to-indigo-700 disabled:cursor-not-allowed disabled:from-slate-400 disabled:to-slate-500 dark:disabled:from-slate-600 dark:disabled:to-slate-700"
+                    aria-label="Send message"
                   >
-                    Send
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-[18px] w-[18px]">
+                      <path d="M12 18V6" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" />
+                      <path d="M7 11L12 6L17 11" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </button>
                 </div>
               </form>

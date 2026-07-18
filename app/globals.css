@@ -10,3 +10,21 @@
 html {
   -webkit-text-size-adjust: 100%;
 }
+
+.chat-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 152, 163, 0.8) transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background-color: rgba(148, 152, 163, 0.8);
+}
